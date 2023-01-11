@@ -2,6 +2,7 @@ const Item = require("../models/Item");
 const Tresure = require("../models/Activity");
 const Traveler = require("../models/Booking");
 const Category = require("../models/Category");
+const Bank = require("../models/Bank");
 
 module.exports = {
   landingPage: async (req, res) => {
@@ -53,5 +54,48 @@ module.exports = {
       console.log(error);
       res.status(500).json({ message: "Internal Server Error" });
     }
+  },
+
+  detailPage: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const item = await Item.findOne({ _id: id }).populate({ path: "featureId", select: "_id name qty imageUrl" }).populate({ path: "activityId", select: "_id name type imageUrl" }).populate({ path: "imageId", select: "_id imageUrl" });
+
+      const bank = await Bank.find();
+
+      const testimonial = {
+        _id: "asd1293uasdads1",
+        imageUrl: "images/testimonial1.jpg",
+        name: "Happy Family",
+        rate: 4.55,
+        content: "what a great trip with my family and i should try again next time soon ...",
+        familyName: "Angga",
+        familyOccupation: "product Designer",
+      };
+
+      res.status(200).json({
+        ...item._doc,
+        bank,
+        testimonial,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+      });
+    }
+  },
+
+  bookingPage: async (req, res) => {
+    const { idItem, duration, price, bookingStartDate, bookingEndDate, firstName, LastName, email, phoneNumber, accountHolder, bankFrom } = req.body;
+
+    if (!req.file) {
+      return res.status(404).json({ message: "Image not Found" });
+    }
+
+    if (idItem === "" || duration === "" || price === "" || bookingStartDate === "" || bookingEndDate === "" || firstName === "" || LastName === "" || email === "" || phoneNumber === "" || accountHolder === "" || bankFrom === "") {
+      res.status(404).json({ message: "Lengkapi semua field" });
+    }
+
+    res.status(201).json({ message: "Success Booking" });
   },
 };
