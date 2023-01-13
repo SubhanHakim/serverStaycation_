@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 
 // Connect to MongoDB via Mongoose
-seeder.connect("mongodb://127.0.0.1:27017/db-bwamern", function () {
+seeder.connect("mongodb+srv://subhahakim_:subhanhakim@cluster0.rvmqulv.mongodb.net/db-bwamern?retryWrites=true&w=majority", function () {
   // Load Mongoose models
   seeder.loadModels(["./models/Category", "./models/Bank", "./models/Item", "./models/Feature", "./models/Activity", "./models/Member", "./models/Image", "./models/Member", "./models/Booking", "./models/Users"]);
 

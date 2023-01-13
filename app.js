@@ -9,7 +9,7 @@ const flash = require("connect-flash");
 // Import mongoose
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
-mongoose.connect("mongodb://127.0.0.1:27017/db-bwamern");
+mongoose.connect("mongodb+srv://subhahakim_:subhanhakim@cluster0.rvmqulv.mongodb.net/db-bwamern?retryWrites=true&w=majority");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
